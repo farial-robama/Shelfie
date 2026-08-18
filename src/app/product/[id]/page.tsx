@@ -32,7 +32,7 @@ export default async function ProductPage({ params }: Props) {
   return (
     <div className="mx-auto max-w-3xl w-full px-5 sm:px-8 py-10 sm:py-14">
       <Link
-        href="/"
+        href="/products"
         className="inline-flex items-center gap-1.5 text-xs font-medium text-muted hover:text-accent transition-colors mb-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent rounded-sm"
       >
         <ArrowLeft className="h-3.5 w-3.5" />

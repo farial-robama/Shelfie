@@ -13,7 +13,7 @@ export default function NotFound() {
         It may have been removed from the Shelfie, or the link is off.
       </p>
       <Link
-        href="/"
+        href="/products"
         className="mt-6 rounded-full bg-ink text-paper font-mono text-sm px-5 py-2.5 hover:bg-accent hover:text-accent-ink transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
         Back to Shelfie
