@@ -6,7 +6,7 @@ export default function SpecTable({ data }: { data: ProductData }) {
 
   if (entries.length === 0) {
     return (
-      <p className="font-mono text-sm text-muted italic">
+      <p className="text-sm text-muted italic">
         No spec data on file for this item.
       </p>
     );
@@ -17,12 +17,10 @@ export default function SpecTable({ data }: { data: ProductData }) {
       {entries.map(([key, value]) => (
         <div
           key={key}
-          className="flex items-center justify-between gap-4 px-5 py-3"
+          className="flex items-center justify-between gap-4 px-5 py-3.5"
         >
-          <dt className="font-mono text-xs uppercase tracking-wide text-muted">
-            {formatSpecLabel(key)}
-          </dt>
-          <dd className="font-mono text-sm text-ink text-right">
+          <dt className="text-sm text-muted">{formatSpecLabel(key)}</dt>
+          <dd className="text-sm font-medium text-ink text-right">
             {String(value)}
           </dd>
         </div>

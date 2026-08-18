@@ -7,7 +7,7 @@ export default function Error({ reset }: { reset: () => void }) {
         Error
       </span>
       <h1 className="font-display font-bold text-2xl text-ink mt-2">
-        Something went wrong loading the catalog
+        Something went wrong loading the Shelfie
       </h1>
       <p className="text-muted mt-2 max-w-sm">
         The inventory API might be temporarily unavailable.

@@ -1,6 +1,6 @@
-# Catalog — a small storefront on restful-api.dev
+# Shelfie — a small storefront on restful-api.dev
 
-A simple, responsive e-commerce-style catalog built with Next.js (App Router) and
+A simple, responsive e-commerce-style Shelfie built with Next.js (App Router) and
 TypeScript. It reads live product data from the public
 [restful-api.dev](https://restful-api.dev/) `objects` endpoint, lists everything in a
 responsive grid, and shows each item's full spec sheet on its own detail page.
@@ -46,7 +46,7 @@ npm run start   # serve the production build
 npm run lint     # eslint
 ```
 
-No environment variables or API keys are required — the restful-api.dev catalog
+No environment variables or API keys are required — the restful-api.dev Shelfie
 endpoint is public.
 
 ## Project structure
@@ -54,7 +54,7 @@ endpoint is public.
 ```
 src/
   app/
-    page.tsx                 # catalog (server component, fetches product list)
+    page.tsx                 # Shelfie (server component, fetches product list)
     product/[id]/page.tsx    # product detail (server component, fetches one item)
     loading.tsx / error.tsx / not-found.tsx
     layout.tsx, globals.css  # shared shell, fonts, design tokens
@@ -77,7 +77,7 @@ This project deploys to Vercel with zero configuration:
 
 ## Notes on the API
 
-`restful-api.dev` is a shared public sandbox, so the catalog reflects whatever data
+`restful-api.dev` is a shared public sandbox, so the Shelfie reflects whatever data
 currently exists on the service (it can include entries added by other developers
 testing the API). Product pages use `revalidate: 60` so the list and detail pages stay
 reasonably fresh without hammering the API on every request.

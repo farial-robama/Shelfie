@@ -3,20 +3,23 @@ import type { Product } from "./types";
 const API_BASE = "https://api.restful-api.dev";
 
 export class ApiError extends Error {
-  constructor(message: string, public status?: number) {
+  constructor(
+    message: string,
+    public status?: number,
+  ) {
     super(message);
     this.name = "ApiError";
   }
 }
 
-/** Fetches the full catalog. Revalidated periodically since the data is shared/public. */
+/** Fetches the full Shelfie. Revalidated periodically since the data is shared/public. */
 export async function getProducts(): Promise<Product[]> {
   const res = await fetch(`${API_BASE}/objects`, {
     next: { revalidate: 60 },
   });
 
   if (!res.ok) {
-    throw new ApiError("Couldn't load the catalog right now.", res.status);
+    throw new ApiError("Couldn't load the Shelfie right now.", res.status);
   }
 
   const data = (await res.json()) as Product[];

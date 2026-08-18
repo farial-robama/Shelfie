@@ -1,72 +1,64 @@
+import Image from "next/image";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import type { Product } from "@/lib/types";
-import { extractPrice, formatPrice, formatSpecLabel } from "@/lib/api";
-
-function paddedId(id: string): string {
-  const numeric = id.replace(/\D/g, "");
-  if (numeric.length > 0 && numeric.length <= 4) {
-    return numeric.padStart(3, "0");
-  }
-  return id;
-}
+import { extractPrice, formatPrice } from "@/lib/api";
+import { detectCategory } from "@/lib/category";
 
 export default function ProductCard({ product }: { product: Product }) {
   const price = extractPrice(product);
-  const specEntries = product.data
-    ? Object.entries(product.data).filter(([key]) => !/price/i.test(key))
-    : [];
+  const category = detectCategory(product.name);
+  const Icon = category.icon;
+  const specPreview = product.data
+    ? Object.entries(product.data).find(([key]) => !/price/i.test(key))
+    : undefined;
 
   return (
     <Link
       href={`/product/${encodeURIComponent(product.id)}`}
-      className="group relative block rounded-xl bg-surface border border-line shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:border-accent/50 transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent overflow-hidden"
+      className="group block rounded-2xl bg-surface border border-line overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_-12px_rgba(23,24,28,0.18)] hover:border-accent/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
     >
-      {/* Punched hole */}
-      <span
-        aria-hidden
-        className="absolute top-4 right-4 h-3 w-3 rounded-full bg-paper tag-hole"
-      />
-
-      <div className="px-5 pt-5 pb-4">
-        <span className="font-mono text-[11px] tracking-widest text-muted uppercase">
-          Obj·{paddedId(product.id)}
+      <div className={`relative aspect-[4/3] overflow-hidden ${category.tile}`}>
+        <Image
+          src={category.image}
+          alt={`${category.label} category photo`}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+        />
+        <span
+          className={`absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full ${category.badgeBg} backdrop-blur px-2.5 py-1 text-[11px] font-medium ${category.badgeText} shadow-sm`}
+        >
+          <Icon className="h-3 w-3" strokeWidth={2} />
+          {category.label}
         </span>
-        <h2 className="font-display font-bold text-lg leading-snug text-ink mt-1.5 pr-6 line-clamp-2">
+      </div>
+
+      <div className="p-4">
+        <h2 className="font-display font-bold text-[15px] leading-snug text-ink line-clamp-1">
           {product.name}
         </h2>
-      </div>
-
-      {/* Perforated tear line */}
-      <div className="tag-perforation h-px w-full border-t border-dashed border-line" />
-
-      <div className="px-5 py-4 min-h-[3.75rem]">
-        {specEntries.length > 0 ? (
-          <ul className="font-mono text-xs text-muted space-y-1">
-            {specEntries.slice(0, 2).map(([key, value]) => (
-              <li key={key} className="flex gap-1.5 truncate">
-                <span className="text-muted/70">{formatSpecLabel(key)}:</span>
-                <span className="text-ink/80 truncate">{String(value)}</span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="font-mono text-xs text-muted/70 italic">
-            No spec data on file
+        {specPreview ? (
+          <p className="text-xs text-muted mt-1 line-clamp-1">
+            {String(specPreview[1])}
           </p>
-        )}
-      </div>
-
-      <div className="px-5 pb-5 flex items-center justify-between">
-        <span className="font-mono text-[11px] text-muted group-hover:text-accent transition-colors">
-          View details →
-        </span>
-        {price !== null ? (
-          <span className="font-display font-bold text-sm text-accent-ink bg-accent/15 rounded-full px-3 py-1">
-            {formatPrice(price)}
-          </span>
         ) : (
-          <span className="font-mono text-[11px] text-muted/60">—</span>
+          <p className="text-xs text-muted/70 mt-1 italic">No specs listed</p>
         )}
+
+        <div className="flex items-center justify-between mt-3">
+          {price !== null ? (
+            <span className="font-display font-bold text-sm text-ink">
+              {formatPrice(price)}
+            </span>
+          ) : (
+            <span className="text-xs text-muted/60">Price n/a</span>
+          )}
+          <span className="flex items-center gap-1 text-xs font-medium text-muted group-hover:text-accent transition-colors">
+            View
+            <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+          </span>
+        </div>
       </div>
     </Link>
   );
