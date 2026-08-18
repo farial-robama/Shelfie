@@ -18,6 +18,7 @@ import {
   detectCategory,
   getProductImage,
 } from "@/lib/category";
+import Testimonials from "@/components/Testimonials";
 
 export const revalidate = 60;
 
@@ -74,7 +75,7 @@ export default async function Home() {
                 <input
                   type="text"
                   name="q"
-                  placeholder="Search the shelf — try “desk lamp”"
+                  placeholder="Search the shelf"
                   className="w-full bg-transparent border-0 outline-none text-sm text-ink placeholder:text-muted px-3 py-2.5"
                 />
               </div>
@@ -111,10 +112,10 @@ export default async function Home() {
                   key={c.id}
                   className={`absolute rounded-2xl overflow-hidden border border-line shadow-sm ${c.tile} ${
                     i === 0
-                      ? "w-[62%] aspect-[4/5] top-0 right-0"
+                      ? "w-[62%] aspect-[4/5] top-0 right-0 hero-float-1"
                       : i === 1
-                        ? "w-[46%] aspect-square bottom-0 left-0"
-                        : "w-[38%] aspect-square bottom-20 right-[32%] -rotate-3"
+                        ? "w-[46%] aspect-square bottom-0 left-0 hero-float-2"
+                        : "w-[38%] aspect-square bottom-20 right-[32%] hero-float-3"
                   }`}
                 >
                   <Image
@@ -126,7 +127,7 @@ export default async function Home() {
                   />
                 </div>
               ))}
-              <div className="absolute top-6 left-0 rounded-2xl bg-surface border border-line px-4 py-3 shadow-sm flex items-center gap-2.5">
+              <div className="absolute top-6 left-0 rounded-2xl bg-surface border border-line px-4 py-3 shadow-sm flex items-center gap-2.5 hero-float-badge">
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-accent-soft text-accent-ink shrink-0">
                   <Boxes className="h-4 w-4" strokeWidth={1.75} />
                 </div>
@@ -276,59 +277,79 @@ export default async function Home() {
         </section>
       )}
 
-      <section className="border-y border-line bg-surface/60">
-        <div className="mx-auto max-w-6xl w-full px-5 sm:px-8 py-10 sm:py-12">
-          <div className="grid grid-cols-2 lg:grid-cols-4 divide-y divide-line lg:divide-y-0 lg:divide-x">
-            <div className="flex items-start gap-3 py-4 lg:py-0 lg:px-6 first:lg:pl-0">
-              <Truck
-                className="h-5 w-5 text-accent shrink-0 mt-0.5"
-                strokeWidth={1.75}
-              />
-              <div>
-                <p className="text-sm font-semibold text-ink">Free shipping</p>
-                <p className="text-xs text-muted mt-0.5">
-                  On every order over $50
-                </p>
+      <Testimonials />
+
+        <section className="border-y border-line bg-surface/60 overflow-hidden">
+        <div
+          className="w-full overflow-hidden py-10 sm:py-12"
+          style={{
+            maskImage:
+              "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+            WebkitMaskImage:
+              "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+          }}
+        >
+          <div className="marquee-track flex items-stretch gap-10 w-max">
+            {[0, 1].map((set) => (
+              <div key={set} className="flex items-stretch gap-10 shrink-0">
+                <div className="flex items-start gap-3 w-64 shrink-0">
+                  <Truck
+                    className="h-5 w-5 text-accent shrink-0 mt-0.5"
+                    strokeWidth={1.75}
+                  />
+                  <div>
+                    <p className="text-sm font-semibold text-ink whitespace-nowrap">
+                      Free shipping
+                    </p>
+                    <p className="text-xs text-muted mt-0.5 whitespace-nowrap">
+                      On every order over $50
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 w-64 shrink-0">
+                  <RotateCcw
+                    className="h-5 w-5 text-accent shrink-0 mt-0.5"
+                    strokeWidth={1.75}
+                  />
+                  <div>
+                    <p className="text-sm font-semibold text-ink whitespace-nowrap">
+                      Easy returns
+                    </p>
+                    <p className="text-xs text-muted mt-0.5 whitespace-nowrap">
+                      30 days, no questions asked
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 w-64 shrink-0">
+                  <ShieldCheck
+                    className="h-5 w-5 text-accent shrink-0 mt-0.5"
+                    strokeWidth={1.75}
+                  />
+                  <div>
+                    <p className="text-sm font-semibold text-ink whitespace-nowrap">
+                      Secure checkout
+                    </p>
+                    <p className="text-xs text-muted mt-0.5 whitespace-nowrap">
+                      Your info stays protected
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 w-64 shrink-0">
+                  <MessageCircle
+                    className="h-5 w-5 text-accent shrink-0 mt-0.5"
+                    strokeWidth={1.75}
+                  />
+                  <div>
+                    <p className="text-sm font-semibold text-ink whitespace-nowrap">
+                      Real support
+                    </p>
+                    <p className="text-xs text-muted mt-0.5 whitespace-nowrap">
+                      A person replies within a day
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="flex items-start gap-3 py-4 lg:py-0 lg:px-6">
-              <RotateCcw
-                className="h-5 w-5 text-accent shrink-0 mt-0.5"
-                strokeWidth={1.75}
-              />
-              <div>
-                <p className="text-sm font-semibold text-ink">Easy returns</p>
-                <p className="text-xs text-muted mt-0.5">
-                  30 days, no questions asked
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3 py-4 lg:py-0 lg:px-6">
-              <ShieldCheck
-                className="h-5 w-5 text-accent shrink-0 mt-0.5"
-                strokeWidth={1.75}
-              />
-              <div>
-                <p className="text-sm font-semibold text-ink">
-                  Secure checkout
-                </p>
-                <p className="text-xs text-muted mt-0.5">
-                  Your info stays protected
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3 py-4 lg:py-0 lg:px-6 last:lg:pr-0">
-              <MessageCircle
-                className="h-5 w-5 text-accent shrink-0 mt-0.5"
-                strokeWidth={1.75}
-              />
-              <div>
-                <p className="text-sm font-semibold text-ink">Real support</p>
-                <p className="text-xs text-muted mt-0.5">
-                  A person replies within a day
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

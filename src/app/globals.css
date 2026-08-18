@@ -100,3 +100,58 @@ body::before {
 .fade-up {
   animation: fade-up 0.5s ease-out both;
 }
+
+@keyframes float-1 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(12px); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-10px) rotate(-1deg); }
+}
+
+@keyframes float-badge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.hero-float-1 {
+  animation: float-1 6s ease-in-out infinite;
+}
+
+.hero-float-2 {
+  animation: float-2 7s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.hero-float-3 {
+  animation: float-3 5.5s ease-in-out infinite;
+  animation-delay: -1s;
+}
+
+.hero-float-badge {
+  animation: float-badge 5s ease-in-out infinite;
+  animation-delay: -3s;
+}
+
+.testimonial-gradient {
+  background: linear-gradient(
+    120deg,
+    var(--accent-soft),
+    var(--paper) 35%,
+    color-mix(in srgb, var(--accent) 45%, var(--paper)) 100%
+  );
+  background-size: 200% 200%;
+  animation: testimonial-gradient-shift 12s ease-in-out infinite;
+}
+
+@keyframes testimonial-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
