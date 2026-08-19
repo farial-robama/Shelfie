@@ -3,16 +3,22 @@
 import { useState } from "react";
 import Image from "next/image";
 
+const FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1526738549149-8e07eca6c147?auto=format&fit=crop&w=800&q=80";
+
 export default function ProductImage({
   src,
   alt,
   className = "",
 }: {
-  src: string;
+  src?: string | null;
   alt: string;
   className?: string;
 }) {
   const [loaded, setLoaded] = useState(false);
+
+  // Fallback if src is undefined, null, or empty string
+  const validSrc = src && src.trim() !== "" ? src : FALLBACK_IMAGE;
 
   return (
     <>
@@ -23,8 +29,8 @@ export default function ProductImage({
         aria-hidden="true"
       />
       <Image
-        src={src}
-        alt={alt}
+        src={validSrc}
+        alt={alt || "Product image"}
         fill
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         className={`object-cover transition-all duration-700 ease-out ${

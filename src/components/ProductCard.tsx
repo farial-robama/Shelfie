@@ -7,9 +7,13 @@ import ProductImage from "./ProductImage";
 import WishlistButton from "./WishlistButton";
 
 export default function ProductCard({ product }: { product: Product }) {
+  if (!product) return null;
+
   const price = extractPrice(product);
-  const category = detectCategory(product.name);
+  const category = detectCategory(product.name || "");
   const Icon = category.icon;
+  const imageSrc = getProductImage(product);
+
   const specPreview = product.data
     ? Object.entries(product.data).find(([key]) => !/price/i.test(key))
     : undefined;
@@ -21,12 +25,12 @@ export default function ProductCard({ product }: { product: Product }) {
     >
       <div className={`relative aspect-[4/3] overflow-hidden ${category.tile}`}>
         <ProductImage
-          src={getProductImage(product)}
-          alt={product.name}
+          src={imageSrc}
+          alt={product.name || "Product"}
           className="group-hover:scale-110"
         />
 
-        <div className="absolute inset-x-0 top-0 flex items-start justify-between p-3">
+        <div className="absolute inset-x-0 top-0 flex items-start justify-between p-3 z-10">
           <span
             className={`inline-flex items-center gap-1.5 rounded-full ${category.badgeBg} backdrop-blur px-2.5 py-1 text-[11px] font-medium ${category.badgeText} shadow-sm`}
           >
@@ -41,7 +45,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
       <div className="p-4">
         <h2 className="font-display font-bold text-[15px] leading-snug text-ink line-clamp-1 transition-colors duration-300 group-hover:text-accent">
-          {product.name}
+          {product.name || "Unnamed Product"}
         </h2>
         {specPreview ? (
           <p className="text-xs text-muted mt-1 line-clamp-1">

@@ -12,7 +12,7 @@ export class ApiError extends Error {
   }
 }
 
-/** Fetches the full Shelfie. Revalidated periodically since the data is shared/public. */
+
 export async function getProducts(): Promise<Product[]> {
   const res = await fetch(`${API_BASE}/objects`, {
     next: { revalidate: 60 },
@@ -26,7 +26,6 @@ export async function getProducts(): Promise<Product[]> {
   return data;
 }
 
-/** Fetches a single product by id. Returns null on a 404 so pages can render notFound(). */
 export async function getProduct(id: string): Promise<Product | null> {
   const res = await fetch(`${API_BASE}/objects/${encodeURIComponent(id)}`, {
     next: { revalidate: 60 },
@@ -41,7 +40,6 @@ export async function getProduct(id: string): Promise<Product | null> {
   return (await res.json()) as Product;
 }
 
-/** Finds the most price-like field in a product's freeform data bag, if any. */
 export function extractPrice(product: Product): number | null {
   if (!product.data) return null;
   for (const [key, value] of Object.entries(product.data)) {
@@ -59,7 +57,6 @@ export function formatPrice(price: number): string {
   }).format(price);
 }
 
-/** Turns a data key like "Hard disk size" or "cpu_model" into a tidy label. */
 export function formatSpecLabel(key: string): string {
   const spaced = key
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2")

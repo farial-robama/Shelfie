@@ -20,30 +20,42 @@ const SORT_LABELS: Record<SortOption, string> = {
   "name-asc": "Name: A to Z",
 };
 
-export default function ProductGrid({ products }: { products: Product[] }) {
+export default function ProductGrid({
+  products = [],
+}: {
+  products?: Product[];
+}) {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<CategoryId | "all">(
-    "all",
+    "all"
   );
   const [sort, setSort] = useState<SortOption>("default");
 
-  const categories = useMemo(() => categoriesPresent(products), [products]);
+  const safeProducts = Array.isArray(products) ? products : [];
+  const categories = useMemo(
+    () => categoriesPresent(safeProducts),
+    [safeProducts]
+  );
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
 
-    let list = products.filter((p) => {
+    let list = safeProducts.filter((p) => {
+      if (!p) return false;
       if (
         activeCategory !== "all" &&
-        detectCategory(p.name).id !== activeCategory
+        detectCategory(p.name || "").id !== activeCategory
       ) {
         return false;
       }
       if (!q) return true;
-      if (p.name.toLowerCase().includes(q)) return true;
+
+      const productName = (p.name || "").toLowerCase();
+      if (productName.includes(q)) return true;
       if (!p.data) return false;
+
       return Object.entries(p.data).some(([key, value]) =>
-        `${key} ${value}`.toLowerCase().includes(q),
+        `${key} ${value}`.toLowerCase().includes(q)
       );
     });
 
@@ -57,11 +69,13 @@ export default function ProductGrid({ products }: { products: Product[] }) {
         return sort === "price-asc" ? pa - pb : pb - pa;
       });
     } else if (sort === "name-asc") {
-      list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+      list = [...list].sort((a, b) =>
+        (a.name || "").localeCompare(b.name || "")
+      );
     }
 
     return list;
-  }, [products, query, activeCategory, sort]);
+  }, [safeProducts, query, activeCategory, sort]);
 
   return (
     <div>
@@ -121,7 +135,7 @@ export default function ProductGrid({ products }: { products: Product[] }) {
         </select>
 
         <span className="font-mono text-xs text-muted whitespace-nowrap">
-          {filtered.length} of {products.length} items
+          {filtered.length} of {safeProducts.length} items
         </span>
       </div>
 
@@ -138,7 +152,7 @@ export default function ProductGrid({ products }: { products: Product[] }) {
         <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {filtered.map((product, i) => (
             <motion.li
-              key={product.id}
+              key={product.id || i}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: Math.min(i, 8) * 0.03 }}

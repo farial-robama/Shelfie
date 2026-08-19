@@ -21,31 +21,31 @@ import FaqAccordion from "@/components/FaqAccordion";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "About — Shelfie",
+  title: "About Us — Shelfie Electronics",
   description:
-    "What Shelfie is, how it's built, and where its data comes from.",
+    "Learn about Shelfie, our premium consumer electronics lineup, fast delivery, and quality guarantees.",
 };
 
 const FAQS = [
   {
-    question: "Is this a real store I can buy from?",
+    question: "How fast do you ship my orders?",
     answer:
-      "No — Shelfie is a demo storefront. There's no checkout, no payment processing, and nothing ships. It exists to show what a well-built catalog frontend looks like.",
+      "All orders placed before 2 PM EST are processed same-day. Express shipping delivers within 1 to 2 business days, while standard delivery typically takes 3 to 5 business days.",
   },
   {
-    question: "Where does the inventory come from?",
+    question: "Where do you source your electronics?",
     answer:
-      "Every listing is fetched live from restful-api.dev, a free public sandbox API. Shelfie doesn't own or store any of it — refresh the page and you're seeing the current state of that API, not a cached copy.",
+      "We partner directly with authorized distributors and top tech brands to guarantee 100% authentic, brand-new electronics complete with manufacturer warranties.",
   },
   {
-    question: "Why don't the product photos match exactly?",
+    question: "What is your return policy?",
     answer:
-      "The API returns names and specs but no images, so each item shows a photo chosen for its category and, where possible, keywords from its own name — not an exact studio shot of that specific product.",
+      "We offer a 30-day hassle-free return policy. If you are not completely satisfied with your purchase, return it in original condition for a full refund or exchange.",
   },
   {
-    question: "Can inventory change or disappear?",
+    question: "Do your products come with warranties?",
     answer:
-      "Yes. Since the catalog mirrors a public sandbox API in real time, items can be added, edited, or removed upstream at any point, and Shelfie will reflect that on the next refresh.",
+      "Yes! Every item sold on Shelfie includes standard manufacturer warranty coverage, plus optional extended protection plans available at checkout.",
   },
 ];
 
@@ -70,17 +70,16 @@ export default async function AboutPage() {
         <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10">
           <div>
             <span className="text-xs font-medium uppercase tracking-widest text-accent">
-              About this project
+              About Shelfie
             </span>
 
             <h1 className="mt-2 font-display text-3xl font-bold leading-[1.1] text-ink sm:text-4xl">
-              A frontend, doing one job well.
+              Next-gen tech, delivered straight to your door.
             </h1>
 
             <p className="mt-4 max-w-lg text-base text-muted sm:text-lg">
-              Shelfie is a small e-commerce-style catalog. No backend, no
-              database, no admin panel — just a frontend built to make a live
-              public API feel like a real store to browse.
+              Welcome to Shelfie — your ultimate destination for high-performance
+              tech, smart devices, and premium gadgets curated for your digital lifestyle.
             </p>
 
             {products.length > 0 && (
@@ -89,7 +88,7 @@ export default async function AboutPage() {
                   <p className="font-display text-2xl font-bold text-ink">
                     {products.length}
                   </p>
-                  <p className="mt-0.5 text-xs text-muted">Live products</p>
+                  <p className="mt-0.5 text-xs text-muted">In-stock items</p>
                 </div>
 
                 <div className="hidden h-8 w-px bg-line sm:block" />
@@ -98,16 +97,16 @@ export default async function AboutPage() {
                   <p className="font-display text-2xl font-bold text-ink">
                     {categoryCount}
                   </p>
-                  <p className="mt-0.5 text-xs text-muted">Categories</p>
+                  <p className="mt-0.5 text-xs text-muted">Tech categories</p>
                 </div>
 
                 <div className="hidden h-8 w-px bg-line sm:block" />
 
                 <div>
                   <p className="font-display text-2xl font-bold text-ink">
-                    60s
+                    24/7
                   </p>
-                  <p className="mt-0.5 text-xs text-muted">Refresh window</p>
+                  <p className="mt-0.5 text-xs text-muted">Customer support</p>
                 </div>
               </div>
             )}
@@ -117,7 +116,7 @@ export default async function AboutPage() {
                 href="/products"
                 className="inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-medium text-paper transition-colors hover:bg-accent"
               >
-                Browse the catalog
+                Shop all tech
                 <ArrowRight className="h-4 w-4" />
               </Link>
 
@@ -127,7 +126,7 @@ export default async function AboutPage() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-5 py-3 text-sm font-medium text-ink transition-colors hover:border-ink/30"
               >
-                View the API
+                View deals
               </a>
             </div>
           </div>
@@ -148,12 +147,11 @@ export default async function AboutPage() {
 
               <div className="absolute -bottom-5 left-5 right-5 rounded-2xl border border-line bg-surface px-4 py-3.5 shadow-sm sm:right-auto sm:w-64">
                 <p className="text-sm font-semibold leading-none text-ink">
-                  Every photo, honestly labeled
+                  100% Authentic Products
                 </p>
 
                 <p className="mt-1.5 text-xs text-muted">
-                  Category and keyword matched — never claimed as an exact
-                  product shot.
+                  Directly from top global technology brands with full manufacturer warranty.
                 </p>
               </div>
             </div>
@@ -161,16 +159,16 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Marquee — real inventory, scrolling */}
+      {/* Marquee */}
       {marqueeItems.length > 0 && (
         <section className="overflow-hidden border-y border-line bg-surface/60 py-10 sm:py-14">
           <div className="mx-auto mb-6 w-full max-w-6xl px-5 sm:px-8">
             <span className="text-xs font-medium uppercase tracking-widest text-accent">
-              Live right now
+              Trending now
             </span>
 
             <h2 className="mt-1 font-display text-lg font-bold text-ink">
-              What&apos;s actually on the shelf
+              Featured tech in stock
             </h2>
           </div>
 
@@ -228,7 +226,7 @@ export default async function AboutPage() {
       {/* How it works */}
       <section className="mx-auto w-full max-w-3xl px-5 pt-14 sm:px-8 sm:pt-20">
         <h2 className="mb-5 font-display text-lg font-bold text-ink">
-          How it works
+          Why shop with Shelfie
         </h2>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
@@ -237,11 +235,10 @@ export default async function AboutPage() {
               <RefreshCw className="h-4 w-4" strokeWidth={1.75} />
             </div>
 
-            <h3 className="font-display text-sm font-bold text-ink">Fetch</h3>
+            <h3 className="font-display text-sm font-bold text-ink">Express Shipping</h3>
 
             <p className="mt-1 text-sm text-muted">
-              On every request, Shelfie calls restful-api.dev directly —
-              nothing is pre-loaded or hardcoded.
+              Fast, tracked delivery on all orders with dispatch within 24 hours.
             </p>
           </div>
 
@@ -251,13 +248,11 @@ export default async function AboutPage() {
             </div>
 
             <h3 className="font-display text-sm font-bold text-ink">
-              Organize
+              Curated Electronics
             </h3>
 
             <p className="mt-1 text-sm text-muted">
-              Each item&apos;s name is matched against a set of category
-              rules, so browsing and filtering work without the API providing
-              categories itself.
+              Hand-selected gadgets, smartphones, laptops, and audio gear for supreme performance.
             </p>
           </div>
 
@@ -267,12 +262,11 @@ export default async function AboutPage() {
             </div>
 
             <h3 className="font-display text-sm font-bold text-ink">
-              Browse
+              Verified Specs
             </h3>
 
             <p className="mt-1 text-sm text-muted">
-              Search, filter, and open any item to see its full spec sheet —
-              laid out clean, without digging through raw JSON.
+              Complete technical specifications and transparent details so you buy with confidence.
             </p>
           </div>
         </div>
@@ -288,20 +282,11 @@ export default async function AboutPage() {
             </div>
 
             <h2 className="font-display text-sm font-bold text-ink">
-              Where the data comes from
+              Official Distributors
             </h2>
 
             <p className="mt-1.5 text-sm text-muted">
-              Every product listed is fetched live from{" "}
-              <a
-                href="https://restful-api.dev"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent hover:underline"
-              >
-                restful-api.dev
-              </a>
-              , a free public sandbox API. Nothing is stored on our end.
+              All inventory comes directly from factory-authorized suppliers to ensure quality.
             </p>
           </div>
 
@@ -312,12 +297,11 @@ export default async function AboutPage() {
             </div>
 
             <h2 className="font-display text-sm font-bold text-ink">
-              How it&apos;s built
+              Secure Checkout
             </h2>
 
             <p className="mt-1.5 text-sm text-muted">
-              Next.js (App Router) and TypeScript, styled with Tailwind CSS,
-              with Framer Motion for the catalog&apos;s reveal animation.
+              Encrypted transaction processing to keep your payment details completely safe.
             </p>
           </div>
 
@@ -328,13 +312,11 @@ export default async function AboutPage() {
             </div>
 
             <h2 className="font-display text-sm font-bold text-ink">
-              An honest note on photos
+              30-Day Guarantee
             </h2>
 
             <p className="mt-1.5 text-sm text-muted">
-              The API doesn&apos;t provide product images, so each item shows
-              a representative photo matched to its name and category, not an
-              exact product shot.
+              Enjoy complete peace of mind with our straightforward 30-day return policy.
             </p>
           </div>
         </div>
@@ -343,7 +325,7 @@ export default async function AboutPage() {
       {/* FAQ */}
       <section className="mx-auto w-full max-w-3xl px-5 pt-14 sm:px-8 sm:pt-16">
         <h2 className="mb-5 font-display text-lg font-bold text-ink">
-          Common questions
+          Frequently Asked Questions
         </h2>
 
         <FaqAccordion items={FAQS} />
@@ -354,11 +336,11 @@ export default async function AboutPage() {
         <div className="flex flex-col gap-4 rounded-2xl bg-ink p-6 text-paper sm:flex-row sm:items-center sm:justify-between sm:p-8">
           <div>
             <h2 className="font-display text-lg font-bold">
-              Curious what&apos;s in stock?
+              Ready to upgrade your gear?
             </h2>
 
             <p className="mt-1 text-sm text-paper/70">
-              The full catalog updates as the source API changes.
+              Discover our full collection of premium electronics today.
             </p>
           </div>
 
@@ -366,7 +348,7 @@ export default async function AboutPage() {
             href="/products"
             className="inline-flex w-fit shrink-0 items-center gap-2 rounded-full bg-paper px-5 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-accent hover:text-accent-ink"
           >
-            Browse products
+            Start shopping
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>

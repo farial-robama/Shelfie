@@ -71,7 +71,7 @@ export const CATEGORIES: CategoryConfig[] = [
     icon: Smartphone,
     match: /phone|galaxy|iphone|pixel/i,
     keywords: ["smartphone", "mobile"],
-    image: "https://loremflickr.com/640/480/smartphone,mobile/all?lock=102",
+    image: "/phones.png",
     tile: "bg-[#F7E9E1]",
     badgeBg: "bg-white/90",
     badgeText: "text-[#8A4426]",
@@ -143,7 +143,7 @@ export const CATEGORIES: CategoryConfig[] = [
     icon: Package,
     match: /.^/, // never matches directly; used as fallback only
     keywords: ["product", "technology"],
-    image: "https://loremflickr.com/640/480/package,box/all?lock=106",
+    image: "/other.png",
     tile: "bg-[#EDEBE5]",
     badgeBg: "bg-white/90",
     badgeText: "text-[#5C5A52]",
