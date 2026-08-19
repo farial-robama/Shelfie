@@ -12,7 +12,6 @@ export class ApiError extends Error {
   }
 }
 
-
 export async function getProducts(): Promise<Product[]> {
   const res = await fetch(`${API_BASE}/objects`, {
     next: { revalidate: 60 },
@@ -27,26 +26,51 @@ export async function getProducts(): Promise<Product[]> {
 }
 
 export async function getProduct(id: string): Promise<Product | null> {
-  const res = await fetch(`${API_BASE}/objects/${encodeURIComponent(id)}`, {
-    next: { revalidate: 60 },
-  });
+  const res = await fetch(
+    `${API_BASE}/objects/${encodeURIComponent(id)}`,
+    {
+      next: { revalidate: 60 },
+    },
+  );
 
-  if (res.status === 404) return null;
+  if (res.status === 404) {
+    return null;
+  }
 
   if (!res.ok) {
-    throw new ApiError("Couldn't load this item right now.", res.status);
+    throw new ApiError(
+      "Couldn't load this item right now.",
+      res.status,
+    );
   }
 
   return (await res.json()) as Product;
 }
 
 export function extractPrice(product: Product): number | null {
-  if (!product.data) return null;
+  if (!product.data) {
+    return null;
+  }
+
   for (const [key, value] of Object.entries(product.data)) {
-    if (/price/i.test(key) && typeof value === "number") {
+    if (!/price/i.test(key)) {
+      continue;
+    }
+
+    if (typeof value === "number" && Number.isFinite(value)) {
       return value;
     }
+
+    if (typeof value === "string") {
+      const cleaned = value.replace(/[$,\s]/g, "");
+      const price = Number(cleaned);
+
+      if (Number.isFinite(price)) {
+        return price;
+      }
+    }
   }
+
   return null;
 }
 
@@ -62,12 +86,14 @@ export function formatSpecLabel(key: string): string {
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
     .replace(/[_-]+/g, " ")
     .trim();
+
   return spaced
     .split(" ")
     .map((word) =>
       word.length <= 3 && word === word.toUpperCase()
         ? word
-        : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+        : word.charAt(0).toUpperCase() +
+          word.slice(1).toLowerCase(),
     )
     .join(" ");
 }
