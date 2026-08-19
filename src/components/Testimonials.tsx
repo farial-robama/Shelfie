@@ -13,30 +13,30 @@ interface Testimonial {
 const TESTIMONIALS: Testimonial[] = [
   {
     name: "Priya Nair",
-    role: "Verified shopper",
+    role: "Early tester",
     quote:
-      "Found a desk lamp I'd been searching for everywhere else. The spec sheets actually helped me compare before buying instead of guessing.",
+      "Spec sheets made it easy to actually compare items instead of guessing which one fit what I needed.",
     rating: 5,
   },
   {
     name: "Marcus Webb",
-    role: "Verified shopper",
+    role: "Early tester",
     quote:
-      "Checkout was fast and the category browsing made it easy to see everything in one place instead of scrolling forever.",
+      "Category browsing is clean — I could see everything in one place instead of scrolling through one long list.",
     rating: 5,
   },
   {
     name: "Elena Torres",
-    role: "Verified shopper",
+    role: "Early tester",
     quote:
-      "Support actually replied the same day when I had a question about an order. Didn't expect that level of response honestly.",
+      "Search actually understands specs, not just product names. Typed a color and it found what I meant.",
     rating: 4,
   },
   {
     name: "Jamal Ibrahim",
-    role: "Verified shopper",
+    role: "Early tester",
     quote:
-      "Free shipping threshold is reasonable and returns were genuinely easy — no runaround, no fine print surprises.",
+      "No clutter, no popups fighting for attention. Just the shelf and what's on it.",
     rating: 5,
   },
 ];

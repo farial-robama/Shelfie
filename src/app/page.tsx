@@ -1,26 +1,15 @@
 import Link from "next/link";
-import Image from "next/image";
-import {
-  ArrowRight,
-  Search,
-  LayoutGrid,
-  RefreshCw,
-  Sparkles,
-  Boxes,
-  Truck,
-  RotateCcw,
-  ShieldCheck,
-  MessageCircle,
-} from "lucide-react";
+import { ArrowRight, Search, LayoutGrid, Sparkles, Boxes } from "lucide-react";
 import { getProducts, extractPrice, formatPrice } from "@/lib/api";
-import {
-  categoriesPresent,
-  detectCategory,
-  getProductImage,
-} from "@/lib/category";
+import { categoriesPresent, detectCategory } from "@/lib/category";
 import Testimonials from "@/components/Testimonials";
+import SafeImage from "@/components/SafeImage";
+import TrendingGrid from "@/components/TrendingGrid";
+import CategoryGrid from "@/components/CategoryGrid";
 
 export const revalidate = 60;
+
+const PLACEHOLDER_IMAGE = "/placeholder.png";
 
 export default async function Home() {
   let products: Awaited<ReturnType<typeof getProducts>> = [];
@@ -118,8 +107,9 @@ export default async function Home() {
                         : "w-[38%] aspect-square bottom-20 right-[32%] hero-float-3"
                   }`}
                 >
-                  <Image
+                  <SafeImage
                     src={c.image}
+                    fallbackSrc={PLACEHOLDER_IMAGE}
                     alt={`${c.label} category photo`}
                     fill
                     sizes="(max-width: 1024px) 50vw, 30vw"
@@ -158,28 +148,16 @@ export default async function Home() {
               View all →
             </Link>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            {categories.map((c) => (
-              <Link
-                key={c.id}
-                href="/products"
-                className={`group relative aspect-square rounded-2xl overflow-hidden ${c.tile} border border-line hover:border-ink/20 transition-colors`}
-              >
-                <Image
-                  src={c.image}
-                  alt={`${c.label} category photo`}
-                  fill
-                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <span
-                  className={`absolute bottom-2 left-2 right-2 rounded-full ${c.badgeBg} backdrop-blur px-2.5 py-1 text-[11px] font-medium ${c.badgeText} text-center truncate`}
-                >
-                  {c.label}
-                </span>
-              </Link>
-            ))}
-          </div>
+          <CategoryGrid
+            categories={categories.map((c) => ({
+              id: c.id,
+              label: c.label,
+              image: c.image,
+              tile: c.tile,
+              badgeBg: c.badgeBg,
+              badgeText: c.badgeText,
+            }))}
+          />
         </section>
       )}
 
@@ -201,41 +179,7 @@ export default async function Home() {
               View all →
             </Link>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {trending.map((p) => {
-              const category = detectCategory(p.name);
-              const price = extractPrice(p);
-              return (
-                <Link
-                  key={p.id}
-                  href={`/product/${encodeURIComponent(p.id)}`}
-                  className="group rounded-2xl border border-line bg-surface overflow-hidden hover:border-ink/20 transition-colors"
-                >
-                  <div
-                    className={`relative aspect-square overflow-hidden ${category.tile}`}
-                  >
-                    <Image
-                      src={getProductImage(p)}
-                      alt={p.name}
-                      fill
-                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      className="object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                  <div className="p-3.5">
-                    <p className="text-sm font-medium text-ink line-clamp-1">
-                      {p.name}
-                    </p>
-                    {price !== null && (
-                      <p className="text-sm font-semibold text-accent-ink mt-1">
-                        {formatPrice(price)}
-                      </p>
-                    )}
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+          <TrendingGrid products={trending} />
         </section>
       )}
 
@@ -245,8 +189,9 @@ export default async function Home() {
             <div
               className={`relative aspect-[4/3] sm:aspect-auto overflow-hidden ${detectCategory(featured.name).tile}`}
             >
-              <Image
+              <SafeImage
                 src={detectCategory(featured.name).image}
+                fallbackSrc={PLACEHOLDER_IMAGE}
                 alt={`${detectCategory(featured.name).label} category photo`}
                 fill
                 sizes="(max-width: 640px) 100vw, 50vw"
@@ -279,7 +224,7 @@ export default async function Home() {
 
       <Testimonials />
 
-        <section className="border-y border-line bg-surface/60 overflow-hidden">
+      <section className="border-y border-accent/30 bg-accent/10 overflow-hidden">
         <div
           className="w-full overflow-hidden py-10 sm:py-12"
           style={{
@@ -293,58 +238,58 @@ export default async function Home() {
             {[0, 1].map((set) => (
               <div key={set} className="flex items-stretch gap-10 shrink-0">
                 <div className="flex items-start gap-3 w-64 shrink-0">
-                  <Truck
+                  <Boxes
                     className="h-5 w-5 text-accent shrink-0 mt-0.5"
                     strokeWidth={1.75}
                   />
                   <div>
                     <p className="text-sm font-semibold text-ink whitespace-nowrap">
-                      Free shipping
+                      Always fresh stock
                     </p>
                     <p className="text-xs text-muted mt-0.5 whitespace-nowrap">
-                      On every order over $50
+                      Catalog updates in real time, no stale listings
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 w-64 shrink-0">
-                  <RotateCcw
+                  <LayoutGrid
                     className="h-5 w-5 text-accent shrink-0 mt-0.5"
                     strokeWidth={1.75}
                   />
                   <div>
                     <p className="text-sm font-semibold text-ink whitespace-nowrap">
-                      Easy returns
+                      Know before you choose
                     </p>
                     <p className="text-xs text-muted mt-0.5 whitespace-nowrap">
-                      30 days, no questions asked
+                      Full specs on every item, side by side
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 w-64 shrink-0">
-                  <ShieldCheck
+                  <Search
                     className="h-5 w-5 text-accent shrink-0 mt-0.5"
                     strokeWidth={1.75}
                   />
                   <div>
                     <p className="text-sm font-semibold text-ink whitespace-nowrap">
-                      Secure checkout
+                      Find it in seconds
                     </p>
                     <p className="text-xs text-muted mt-0.5 whitespace-nowrap">
-                      Your info stays protected
+                      Search by name, color, spec — it just works
                     </p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3 w-64 shrink-0">
-                  <MessageCircle
+                  <Sparkles
                     className="h-5 w-5 text-accent shrink-0 mt-0.5"
                     strokeWidth={1.75}
                   />
                   <div>
                     <p className="text-sm font-semibold text-ink whitespace-nowrap">
-                      Real support
+                      Built to browse, not bury
                     </p>
                     <p className="text-xs text-muted mt-0.5 whitespace-nowrap">
-                      A person replies within a day
+                      No popups, no noise — just the shelf
                     </p>
                   </div>
                 </div>

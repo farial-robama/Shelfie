@@ -10,7 +10,13 @@ export const metadata: Metadata = {
   description: "Browse the full live catalog, sourced from restful-api.dev.",
 };
 
-export default async function ProductsPage() {
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const { q } = await searchParams;
+
   let products: Awaited<ReturnType<typeof getProducts>> = [];
   let loadError = false;
 
@@ -62,7 +68,7 @@ export default async function ProductsPage() {
       ) : (
         <>
           {featured && <FeaturedBanner product={featured} />}
-          <ProductGrid products={gridProducts} />
+          <ProductGrid products={gridProducts} initialQuery={q ?? ""} />
         </>
       )}
     </div>

@@ -1,4 +1,3 @@
-
 export type ProductData = Record<string, string | number | boolean | null>;
 
 export interface Product {

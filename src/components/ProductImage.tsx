@@ -17,7 +17,6 @@ export default function ProductImage({
 }) {
   const [loaded, setLoaded] = useState(false);
 
-  // Fallback if src is undefined, null, or empty string
   const validSrc = src && src.trim() !== "" ? src : FALLBACK_IMAGE;
 
   return (

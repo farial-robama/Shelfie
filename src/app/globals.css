@@ -145,7 +145,7 @@ body::before {
     120deg,
     var(--accent-soft),
     var(--paper) 35%,
-    color-mix(in srgb, var(--accent) 45%, var(--paper)) 100%
+    color-mix(in srgb, var(--accent) 65%, var(--paper)) 100%
   );
   background-size: 200% 200%;
   animation: testimonial-gradient-shift 12s ease-in-out infinite;

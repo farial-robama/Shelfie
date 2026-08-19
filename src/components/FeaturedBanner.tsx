@@ -1,9 +1,9 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import type { Product } from "@/lib/types";
 import { extractPrice, formatPrice } from "@/lib/api";
-import { detectCategory } from "@/lib/category";
+import { detectCategory, getProductImage } from "@/lib/category";
+import SafeImage from "./SafeImage";
 
 export default function FeaturedBanner({ product }: { product: Product }) {
   const price = extractPrice(product);
@@ -21,9 +21,10 @@ export default function FeaturedBanner({ product }: { product: Product }) {
       className="group grid grid-cols-1 sm:grid-cols-2 rounded-2xl bg-surface border border-line overflow-hidden mb-8 transition-shadow duration-300 hover:shadow-[0_16px_40px_-16px_rgba(23,24,28,0.2)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
     >
       <div className={`relative aspect-[4/3] sm:aspect-auto overflow-hidden ${category.tile}`}>
-        <Image
-          src={category.image}
-          alt={`${category.label} category photo`}
+        <SafeImage
+          src={getProductImage(product)}
+          fallbackSrc={category.image}
+          alt={product.name}
           fill
           sizes="(max-width: 640px) 100vw, 50vw"
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"

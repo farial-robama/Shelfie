@@ -1,83 +1,102 @@
-# Shelfie — a small storefront on restful-api.dev
+# Shelfie
 
-A simple, responsive e-commerce-style Shelfie built with Next.js (App Router) and
-TypeScript. It reads live product data from the public
-[restful-api.dev](https://restful-api.dev/) `objects` endpoint, lists everything in a
-responsive grid, and shows each item's full spec sheet on its own detail page.
+**Live Demo:** https://shelfie-olive-two.vercel.app/
 
-No backend, database, or admin panel — just a frontend consuming a public REST API.
+A polished, frontend-only demo storefront built with Next.js. Shelfie pulls live product data from a public REST API and presents it through a fully custom shopping-browse experience — category navigation, search and sort, animated product grids, a testimonial carousel, and a feature marquee — with no backend, checkout, or auth of its own.
 
-## Stack
+This project is a **UI/UX demo**, not a production e-commerce site. Copy across the app is written to reflect that honestly (see [Content honesty](#content-honesty) below).
 
-- **Next.js 16** (App Router, Server Components)
-- **TypeScript**
-- **Tailwind CSS v4**
-- **Framer Motion** for the grid's reveal animation
-- Google Fonts: Space Grotesk (display), Inter (body), IBM Plex Mono (spec data)
+## Tech stack
+
+- **Framework:** Next.js (App Router, Turbopack)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Animation:** Framer Motion
+- **Icons:** lucide-react
+- **Data source:** [restful-api.dev](https://restful-api.dev) (public product API)
 
 ## Features
 
-- `/` — fetches `GET https://api.restful-api.dev/objects` on the server and renders
-  every item as a tag-style card (id, name, a couple of spec highlights, price if the
-  item has one). Includes a client-side search box that filters by name or any spec
-  value.
-- `/product/[id]` — fetches `GET https://api.restful-api.dev/objects/{id}` and renders
-  the item's full spec table. Unknown ids render a proper 404 page via `notFound()`.
-- Loading skeleton (`loading.tsx`), error boundary with retry (`error.tsx`), and a
-  friendly 404 (`not-found.tsx`).
-- The API's `data` field is a freeform bag that differs per item — the UI renders
-  whatever keys are present instead of assuming a fixed schema, and best-effort
-  detects a price field to show as a badge.
-- Fully responsive (1 / 2 / 3 column grid), keyboard-focus states, and
-  `prefers-reduced-motion` respected.
+- **Live product catalog** — fetched server-side with ISR (`revalidate = 60`)
+- **Category detection & browsing** — products are auto-categorized from their names, with a dedicated "Shop by category" grid
+- **Search & sort** — search-from-hero flows into `/products` via `searchParams`, with client-side filtering by name/spec and sorting by price or name
+- **Animated product grids** — scroll-triggered entrance animations, hover lift, shine-sweep, and sparkle accents on trending items
+- **Wobbling category tiles** — continuous ambient motion with hover glow and sparkle burst
+- **Product detail pages** — full spec sheet, quantity stepper, related products
+- **Testimonial carousel** — autoplay, arrows, dot navigation, pause-on-hover
+- **Feature marquee** — infinite horizontal scroll highlighting real product-browsing features
+- **Resilient images** — `SafeImage` component falls back to a placeholder if a remote image fails to load
+- **Light/dark mode ready** — all UI built on semantic color tokens (`--ink`, `--paper`, `--accent`, etc.) rather than hardcoded Tailwind colors
+
+## Content honesty
+
+Because this is a frontend-only demo with no real checkout, shipping, or support system behind it, all marketing copy (testimonials, the feature marquee, etc.) is written to describe only what the app actually does — browsing, search, spec comparison, and catalog freshness. It intentionally avoids claims about shipping, checkout, payments, or customer support, and testimonial "reviewers" are labeled **Early tester**, not "Verified shopper," since nothing here is actually verified through a real transaction.
 
 ## Getting started
 
+### Prerequisites
+
+- Node.js 18.18+ (or whatever your Next.js version requires)
+- npm, pnpm, or yarn
+
+### Installation
+
 ```bash
 npm install
+# or
+pnpm install
+```
+
+### Development
+
+```bash
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### Build
 
 ```bash
-npm run build   # production build
-npm run start   # serve the production build
-npm run lint     # eslint
+npm run build
+npm run start
 ```
 
-No environment variables or API keys are required — the restful-api.dev Shelfie
-endpoint is public.
+### Lint
+
+```bash
+npm run lint
+```
 
 ## Project structure
 
 ```
 src/
-  app/
-    page.tsx                 # Shelfie (server component, fetches product list)
-    product/[id]/page.tsx    # product detail (server component, fetches one item)
-    loading.tsx / error.tsx / not-found.tsx
-    layout.tsx, globals.css  # shared shell, fonts, design tokens
-  components/
-    ProductGrid.tsx           # client component: search + animated grid
-    ProductCard.tsx            # tag-styled product card
-    SpecTable.tsx               # key/value spec sheet on the detail page
-  lib/
-    api.ts                    # fetch helpers, price/label formatting
-    types.ts                  # Product / ProductData types
+├── app/
+│   ├── page.tsx              # Home — hero, categories, trending, featured, testimonials, marquee
+│   ├── about/                # About page
+│   ├── product/[id]/         # Product detail page
+│   └── products/             # Full catalog page (search, sort, filter)
+├── components/
+│   ├── CategoryGrid.tsx       # Animated "Shop by category" grid
+│   ├── TrendingGrid.tsx       # Animated trending products grid
+│   ├── ProductGrid.tsx        # Filterable/sortable product grid (used on /products)
+│   ├── ProductCard.tsx        # Individual product card
+│   ├── Testimonials.tsx       # Testimonial carousel
+│   ├── SafeImage.tsx          # next/image wrapper with fallback support
+│   └── FeaturedBanner.tsx     # Highest-priced item banner
+├── lib/
+│   ├── api.ts                 # getProducts, extractPrice, formatPrice
+│   ├── category.ts            # detectCategory, categoriesPresent, getProductImage
+│   └── types.ts                # Shared TypeScript types (Product, etc.)
+public/
+└── images/                    # Static assets (including phone images, placeholders)
 ```
 
-## Deploying
+## Notes on data
 
-This project deploys to Vercel with zero configuration:
+Product data is sourced live from a public API and is not guaranteed to be stable or curated — categories, images, and pricing are derived heuristically (`detectCategory`, `getProductImage`) rather than provided directly by the API, since the source dataset doesn't include rich metadata.
 
-1. Push this repo to GitHub.
-2. Import it at https://vercel.com/new.
-3. Deploy — no environment variables needed.
+## License
 
-## Notes on the API
-
-`restful-api.dev` is a shared public sandbox, so the Shelfie reflects whatever data
-currently exists on the service (it can include entries added by other developers
-testing the API). Product pages use `revalidate: 60` so the list and detail pages stay
-reasonably fresh without hammering the API on every request.
+Personal / demo project — not licensed for production commercial use.

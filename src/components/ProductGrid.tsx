@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import type { Product } from "@/lib/types";
 import { extractPrice } from "@/lib/api";
@@ -22,16 +22,27 @@ const SORT_LABELS: Record<SortOption, string> = {
 
 export default function ProductGrid({
   products = [],
+  initialQuery = "",
 }: {
   products?: Product[];
+  initialQuery?: string;
 }) {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery);
   const [activeCategory, setActiveCategory] = useState<CategoryId | "all">(
     "all"
   );
   const [sort, setSort] = useState<SortOption>("default");
 
-  const safeProducts = Array.isArray(products) ? products : [];
+  // keep in sync if the user searches again from the hero while already on /products
+  useEffect(() => {
+    setQuery(initialQuery);
+  }, [initialQuery]);
+
+  const safeProducts = useMemo(
+    () => (Array.isArray(products) ? products : []),
+    [products]
+  );
+
   const categories = useMemo(
     () => categoriesPresent(safeProducts),
     [safeProducts]
