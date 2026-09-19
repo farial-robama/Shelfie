@@ -6,6 +6,11 @@ import Testimonials from "@/components/Testimonials";
 import SafeImage from "@/components/SafeImage";
 import TrendingGrid from "@/components/TrendingGrid";
 import CategoryGrid from "@/components/CategoryGrid";
+import HowItWorks from "@/components/HowItWorks";
+import StatsCTA from "@/components/StatsCTA";
+import FAQ from "@/components/FAQ";
+import Newsletter from "@/components/Newsletter";
+import WhyShelfie from "@/components/WhyShelfie";
 
 export const revalidate = 60;
 
@@ -161,6 +166,10 @@ export default async function Home() {
         </section>
       )}
 
+       <HowItWorks />
+
+       <WhyShelfie />
+
       {trending.length > 0 && (
         <section className="mx-auto max-w-6xl w-full px-5 sm:px-8 pb-16 sm:pb-20">
           <div className="flex items-baseline justify-between mb-5">
@@ -222,9 +231,11 @@ export default async function Home() {
         </section>
       )}
 
+      <StatsCTA />
+
       <Testimonials />
 
-      <section className="border-y border-accent/30 bg-accent/10 overflow-hidden">
+      <section className="border-y border-accent/30 bg-accent/10 overflow-hidden mb-16 sm:mb-20">
         <div
           className="w-full overflow-hidden py-10 sm:py-12"
           style={{
@@ -298,6 +309,11 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      <FAQ />
+
+      <Newsletter />
+
     </div>
   );
 }
