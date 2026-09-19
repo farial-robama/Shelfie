@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { Search, ClipboardCheck, PackageCheck } from "lucide-react";
 
 const steps = [
@@ -21,17 +21,17 @@ const steps = [
   },
 ];
 
-const container = {
+const container: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.15, delayChildren: 0.1 } },
 };
 
-const cardVariant = {
+const cardVariant: Variants = {
   hidden: { opacity: 0, y: 40 },
   show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
 };
 
-const badgeVariant = {
+const badgeVariant: Variants = {
   hidden: { opacity: 0, scale: 0.4 },
   show: {
     opacity: 1,
@@ -43,7 +43,6 @@ const badgeVariant = {
 export default function HowItWorks() {
   return (
     <section className="relative w-full">
-     
       <div className="absolute inset-0">
         <div className="h-[62%] sm:h-[58%] bg-gradient-to-br from-accent to-ink" />
         <div className="h-[38%] sm:h-[42%] bg-paper" />
@@ -80,7 +79,6 @@ export default function HowItWorks() {
                 variants={cardVariant}
                 className="relative"
               >
-                {/* numbered badge, sits on the seam */}
                 <motion.div
                   variants={badgeVariant}
                   className="absolute -top-6 left-1/2 -translate-x-1/2 z-10 flex h-11 w-11 items-center justify-center rounded-full bg-paper border-2 border-accent shadow-sm"

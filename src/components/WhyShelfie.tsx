@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { ShieldCheck, Truck, RefreshCcw, Headset } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -31,7 +31,7 @@ const rightPerks = [
   },
 ];
 
-const fadeUp = (delay = 0) => ({
+const fadeUp = (delay = 0): Variants => ({
   hidden: { opacity: 0, y: 24 },
   show: {
     opacity: 1,
@@ -76,7 +76,6 @@ export default function WhyShelfie() {
   return (
     <section className="mx-auto max-w-6xl w-full px-5 sm:px-8 pb-16 sm:pb-20">
       <div className="relative rounded-2xl border border-line bg-surface px-6 py-12 sm:px-12 sm:py-16 overflow-hidden">
-    
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.4]"
           style={{
@@ -108,7 +107,6 @@ export default function WhyShelfie() {
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-10 sm:gap-6 items-center">
-            {/* left perks */}
             <motion.div
               initial="hidden"
               whileInView="show"
@@ -122,7 +120,6 @@ export default function WhyShelfie() {
               ))}
             </motion.div>
 
-            {/* center image */}
             <motion.div
               initial={{ opacity: 0, scale: 0.92 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -142,7 +139,6 @@ export default function WhyShelfie() {
               </div>
             </motion.div>
 
-            {/* right perks */}
             <motion.div
               initial="hidden"
               whileInView="show"
