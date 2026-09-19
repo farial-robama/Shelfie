@@ -73,24 +73,29 @@ npm run lint
 ```
 src/
 ├── app/
-│   ├── page.tsx              # Home — hero, categories, trending, featured, testimonials, marquee
-│   ├── about/                # About page
-│   ├── product/[id]/         # Product detail page
-│   └── products/             # Full catalog page (search, sort, filter)
+│ ├── page.tsx # Home — hero, categories, how-it-works, why-shelfie, trending, featured, stats/CTA, testimonials, marquee, FAQ, newsletter
+│ ├── about/ # About page
+│ ├── product/[id]/ # Product detail page
+│ └── products/ # Full catalog page (search, sort, filter)
 ├── components/
-│   ├── CategoryGrid.tsx       # Animated "Shop by category" grid
-│   ├── TrendingGrid.tsx       # Animated trending products grid
-│   ├── ProductGrid.tsx        # Filterable/sortable product grid (used on /products)
-│   ├── ProductCard.tsx        # Individual product card
-│   ├── Testimonials.tsx       # Testimonial carousel
-│   ├── SafeImage.tsx          # next/image wrapper with fallback support
-│   └── FeaturedBanner.tsx     # Highest-priced item banner
+│ ├── CategoryGrid.tsx # Animated "Shop by category" grid
+│ ├── TrendingGrid.tsx # Animated trending products grid
+│ ├── ProductGrid.tsx # Filterable/sortable product grid (used on /products)
+│ ├── ProductCard.tsx # Individual product card
+│ ├── HowItWorks.tsx # 3-step walkthrough with split background and numbered badges
+│ ├── WhyShelfie.tsx # USP section with left/right perks around a centered image
+│ ├── StatsCTA.tsx # Animated count-up stats banner with browse CTA
+│ ├── Testimonials.tsx # Testimonial carousel
+│ ├── Newsletter.tsx # Newsletter signup, image + form layout
+│ ├── FAQ.tsx # Two-column FAQ accordion
+│ ├── SafeImage.tsx # next/image wrapper with fallback support
+│ └── FeaturedBanner.tsx # Highest-priced item banner
 ├── lib/
-│   ├── api.ts                 # getProducts, extractPrice, formatPrice
-│   ├── category.ts            # detectCategory, categoriesPresent, getProductImage
-│   └── types.ts                # Shared TypeScript types (Product, etc.)
+│ ├── api.ts # getProducts, extractPrice, formatPrice
+│ ├── category.ts # detectCategory, categoriesPresent, getProductImage
+│ └── types.ts # Shared TypeScript types (Product, etc.)
 public/
-└── images/                    # Static assets (including phone images, placeholders)
+└── images/ # Static assets (including phone images, placeholders)
 ```
 
 ## Notes on data

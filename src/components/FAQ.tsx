@@ -60,7 +60,7 @@ export default function FAQ() {
 
           <div className="relative mt-8 rounded-2xl overflow-hidden aspect-[4/3] max-w-md bg-gradient-to-br from-accent-soft to-surface border border-line hidden sm:block">
             <Image
-              src="https://plus.unsplash.com/premium_vector-1726205184786-0502ba690d99?w=352&dpr=2&h=367&auto=format&fit=crop&q=60&ixlib=rb-4.1.0"
+              src="/images/faq.png"
               alt="Shelfie support illustration"
               fill
               sizes="(max-width: 1024px) 100vw, 420px"
